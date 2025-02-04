@@ -94,7 +94,9 @@
     <!-- Datatables BS4 w/ RowGroup & Button -->
     <script src="{{ asset('/assets/plugins/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @include('sweetalert::alert')
 
     @yield('customscript')
 </body>

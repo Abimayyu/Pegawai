@@ -31,10 +31,16 @@ class PegawaiController extends Controller
         ]);
 
         // Menyimpan data pegawai
-        Employee::create($validated);
+        $employee = Employee::create($validated);
+        if ($employee) {
+            toast('Berhasil menambahkan data', 'success');
+            return redirect()->route('pegawai.index');
+        } else {
+            toast('Gagal menambahkan data', 'error');
+            return redirect()->back()->withInput();
+        }
 
         // Redirect ke halaman data pegawai
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
     }
     public function edit($id)
     {
@@ -58,9 +64,14 @@ class PegawaiController extends Controller
         $pegawai = Employee::findOrFail($id);
         // Memperbarui data pegawai
         $pegawai->update($validated);
-
+        if ($pegawai) {
+            toast('Berhasil edit data', 'success');
+            return redirect()->route('pegawai.index');
+        } else {
+            toast('Gagal edit data', 'error');
+            return redirect()->back()->withInput();
+        }
         // Redirect kembali dengan pesan sukses
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil diperbarui');
     }
     public function destroy($id)
     {
@@ -68,8 +79,8 @@ class PegawaiController extends Controller
         $pegawai = Employee::findOrFail($id);
         // Menghapus data pegawai
         $pegawai->delete();
-
+        toast('Berhasil menghapus data', 'success');
         // Redirect kembali dengan pesan sukses
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
+        return redirect()->route('pegawai.index');
     }
 }
